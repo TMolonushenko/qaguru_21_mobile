@@ -7,18 +7,22 @@ import tests.TestBase;
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Selectors.byClassName;
 import static com.codeborne.selenide.Selenide.*;
+import static io.qameta.allure.Allure.step;
 
 public class AndroidSelenideTests extends TestBase {
 
     @Test
     void searchTest() {
 
-        $(MobileBy.AccessibilityId("Search Wikipedia")).click();
-        $(MobileBy.id("org.wikipedia.alpha:id/search_src_text")).setValue("BrowserStack");
+        step("Type search", () -> {
+            $(MobileBy.AccessibilityId("Search Wikipedia")).click();
+            $(MobileBy.id("org.wikipedia.alpha:id/search_src_text")).setValue("BrowserStack");
+        });
 
-        $$(byClassName("android.widget.TextView")).shouldHave(sizeGreaterThan(0));
+        step("Verify content found", () ->
+        $$(byClassName("android.widget.TextView")).shouldHave(sizeGreaterThan(0)));
 
     }
 
 
-    }
+}
